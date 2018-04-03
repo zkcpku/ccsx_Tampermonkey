@@ -5,7 +5,7 @@
 // @description  simplily find the homework!
 // @author       You
 // @match        http://cxsjsx.openjudge.cn/
-// @grant        none
+// @grant       GM_xmlhttpRequest
 // ==/UserScript==
 
 (function() {
@@ -65,6 +65,44 @@
             }
             let newElement;
             newElement = myArray.pop();
+            //检查是否做完
+            let nextHTML = newElement.href;
+            GM_xmlhttpRequest({ method: "GET", url: nextHTML,
+                               onload: function(responseDetails)
+                               {
+                                   var parser = new DOMParser();
+                                   var dom = parser.parseFromString(responseDetails.responseText,
+                                                                    "text/html");
+                                   //console.log(dom);
+                                   var tbody;
+                                   var tbodies = dom.evaluate(
+                                       '//tbody[*]',
+                                       dom,
+                                       null,
+                                       XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE,
+                                       null);
+                                   if(tbodies.snapshotLength == 1)
+                                   {
+                                       tbody = tbodies.snapshotItem(0);
+                                       let trs =[];
+                                       let solve = 0;
+                                       for(let i = 0;i<tbody.childNodes.length;i++)
+                                       {
+                                           if(tbody.childNodes[i].tagName == "TR")
+                                           {
+                                               trs.push(tbody.childNodes[i]);
+                                               let td = tbody.childNodes[i].childNodes[1];
+                                               if(td.tagName === "TD" && td.className === "solved")
+                                               {
+                                                   solve = solve + 1;
+                                               }
+                                           }
+                                       }
+                                       //alert(trs.length);
+                                       newElement.innerHTML = newElement.innerHTML + " " + solve + "/" + trs.length;
+                                   }
+                               } });
+            //将链接插入框架中
             title.parentNode.insertBefore(newElement, title);
         }
     }
