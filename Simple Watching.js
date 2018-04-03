@@ -10,7 +10,7 @@
 
 (function() {
     'use strict';
-    let teacher = "郭";
+    let teacher = "刘";
     let allDivs, thisDiv;
     let myArray=[];
     allDivs = document.evaluate(
@@ -92,7 +92,7 @@
                                            {
                                                trs.push(tbody.childNodes[i]);
                                                let td = tbody.childNodes[i].childNodes[1];
-                                               if(td.tagName === "TD" && td.className === "solved")
+                                               if(td.tagName === "TD" && td.className === "solved" && td.childNodes.length !== 0)
                                                {
                                                    solve = solve + 1;
                                                }
