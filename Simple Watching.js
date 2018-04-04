@@ -10,7 +10,7 @@
 
 (function() {
     'use strict';
-    let teacher = "刘";
+    let teacher = "郭";
     let allDivs, thisDiv;
     let myArray=[];
     allDivs = document.evaluate(
@@ -47,6 +47,9 @@
     let homework;
     homework = document.createElement("div");
     homework.innerHTML = '<div class="coming-contest label"><h3><span>»</span><a>我的作业</a></h3><ul class="container"><p></p></ul></div>';
+    let homeTEXT = homework.childNodes[0].childNodes[0].childNodes[1].innerHTML;
+    //alert(homeTEXT);
+    //用来判断作业是否都做完了
     title.parentNode.insertBefore(homework, title);
     title = homework.childNodes[0].childNodes[1].childNodes[0];
     let first = true;
@@ -92,7 +95,7 @@
                                            {
                                                trs.push(tbody.childNodes[i]);
                                                let td = tbody.childNodes[i].childNodes[1];
-                                               if(td.tagName === "TD" && td.className === "solved" && td.childNodes.length !== 0)
+                                               if(td.tagName === "TD" && td.className === "solved" && td.childNodes.length !== 0 && td.childNodes[0].title== "已解决" )
                                                {
                                                    solve = solve + 1;
                                                }
@@ -100,6 +103,10 @@
                                        }
                                        //alert(trs.length);
                                        newElement.innerHTML = newElement.innerHTML + " " + solve + "/" + trs.length;
+                                      // if(solve != trs.length)
+                                       //{
+                                         //  homework.childNodes[0].childNodes[0].childNodes[1].innerHTML = homework.childNodes[0].childNodes[0].childNodes[1].innerHTML + "没做完/(ㄒoㄒ)/~~";
+                                      // }
                                    }
                                } });
             //将链接插入框架中
