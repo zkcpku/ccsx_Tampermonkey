@@ -10,7 +10,7 @@
 
 (function() {
     'use strict';
-    let teacher = "郭";
+    let teachers = ["郭","不"];
     let allDivs, thisDiv;
     let myArray=[];
     allDivs = document.evaluate(
@@ -24,10 +24,14 @@
         thisDiv = allDivs.snapshotItem(i);
         let txt = thisDiv.innerHTML;
         //alert(thisDiv.parentNode.tagName);
-        if(txt.indexOf(teacher) != -1 && thisDiv.parentNode.tagName == "H3" )//确定是未结束的题
+        for(let j = 0;j <teachers.length; j++)
         {
-            var clone = thisDiv.cloneNode(true);
-            myArray.push(clone);
+            let teacher = teachers[j];
+            if(txt.indexOf(teacher) != -1 && thisDiv.parentNode.tagName == "H3" )//确定是未结束的题
+            {
+                var clone = thisDiv.cloneNode(true);
+                myArray.push(clone);
+            }
         }
     }
     let allTextareas, thisTextarea;
@@ -103,10 +107,10 @@
                                        }
                                        //alert(trs.length);
                                        newElement.innerHTML = newElement.innerHTML + " " + solve + "/" + trs.length;
-                                      // if(solve != trs.length)
-                                       //{
-                                         //  homework.childNodes[0].childNodes[0].childNodes[1].innerHTML = homework.childNodes[0].childNodes[0].childNodes[1].innerHTML + "没做完/(ㄒoㄒ)/~~";
-                                      // }
+                                       if(solve != trs.length)
+                                       {
+                                           homework.childNodes[0].childNodes[0].childNodes[1].innerHTML = homework.childNodes[0].childNodes[0].childNodes[1].innerHTML + "没做完/(ㄒoㄒ)/~~";
+                                      }
                                    }
                                } });
             //将链接插入框架中
